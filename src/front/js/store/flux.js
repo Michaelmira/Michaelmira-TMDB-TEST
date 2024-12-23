@@ -1,24 +1,22 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			
+			getMovies: async () => {
+				const response = await fetch(process.env.BACKEND_URL + "/discover/movie", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: "Bearer " + process.env.REACT_APP_TMDB_API_TOKEN,
+					}
+			})
+				const data = await response.json()
+				setStore({movies: data})
+				return data
 			},
 
 			getMessage: async () => {
